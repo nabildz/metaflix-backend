@@ -25,6 +25,7 @@ class CreateMoviesTable extends Migration
             $table->enum('rating', ['yay', 'nay'])->nullable();
             $table->string('review')->nullable();
             $table->timestamps();
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
     }
 
