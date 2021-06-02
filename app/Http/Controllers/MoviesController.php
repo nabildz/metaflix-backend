@@ -23,6 +23,28 @@ class MoviesController extends Controller
     }
 
 
+    public function getWatchedList()
+    {
+
+        $movies = Movie::where('status', 'is_watched')->get();
+
+        return response()->json(["data" => $movies], 200);
+
+    }
+
+
+
+    public function getWishList()
+    {
+
+        $movies = Movie::where('status', 'in_wishlist')->get();
+
+        return response()->json(["data" => $movies], 200);
+        
+    }
+
+
+
     public function store(MovieRequest $request)
     {
 
@@ -69,7 +91,7 @@ class MoviesController extends Controller
         $movie->delete();
 
         return response()->json(["message" => "Removed from the list"], 200);
-        
+
     }
 
 

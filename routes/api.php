@@ -21,6 +21,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
+Route::get('/movies/watched', [MoviesController::class, 'getWatchedList'])->name('getWatchedList');
+
+Route::get('/movies/wishlist', [MoviesController::class, 'getWishList'])->name('getWishList');
+
 Route::get('/movies/', [MoviesController::class, 'index'])->name('movies');
 
 Route::get('/movies/{id}', [MoviesController::class, 'show'])->name('movies.show');
