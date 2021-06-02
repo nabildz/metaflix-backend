@@ -22,3 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/movies/', [MoviesController::class, 'index'])->name('movies');
+
+Route::get('/movies/{id}', [MoviesController::class, 'show'])->name('movies.show');
+
+Route::post('/movies/', [MoviesController::class, 'store'])->name('movies.store');
+
+Route::put('/movies/', [MoviesController::class, 'update'])->name('movies.update');
+
+Route::delete('/movies/', [MoviesController::class, 'destroy'])->name('movies.delete');
