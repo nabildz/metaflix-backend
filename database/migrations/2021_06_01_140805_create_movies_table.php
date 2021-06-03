@@ -16,7 +16,7 @@ class CreateMoviesTable extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('tmbd_id');
-            $table->tinyInteger('tmbd_vote_average');
+            $table->double('tmbd_vote_average');
             $table->string('language');
             $table->string('title');
             $table->string('image_url');

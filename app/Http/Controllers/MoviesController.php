@@ -25,7 +25,7 @@ class MoviesController extends Controller
     public function getWatchedList()
     {
 
-        $movies = Movie::where('status', 'is_watched')->get();
+        $movies = Movie::where('status', 'is_watched')->latest()->get();
 
         return response()->json(["data" => $movies], 200);
     }
