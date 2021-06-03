@@ -19,7 +19,6 @@ class MoviesController extends Controller
             ->json()['results'];
 
         return response()->json(["data" => $movies], 200);
-
     }
 
 
@@ -29,7 +28,6 @@ class MoviesController extends Controller
         $movies = Movie::where('status', 'is_watched')->get();
 
         return response()->json(["data" => $movies], 200);
-
     }
 
 
@@ -40,7 +38,6 @@ class MoviesController extends Controller
         $movies = Movie::where('status', 'in_wishlist')->get();
 
         return response()->json(["data" => $movies], 200);
-        
     }
 
 
@@ -49,23 +46,20 @@ class MoviesController extends Controller
     {
 
         $movie = Movie::create(
-            $request->only('tmbd_id', 'tmbd_vote_average', 'language', 'title', 'image_url', 'release_date')
+            $request->only('tmbd_id', 'tmbd_vote_average', 'language', 'title', 'image_url', 'release_date','status')
         );
 
-        $message = $movie->status == 'is_watched' ? 'watched list' : 'wish list';
+        $message = $movie->status === 'is_watched' ? 'watched list' : 'wish list';
 
         return response()->json(["message" => "Added to ${message}"], 201);
-
     }
 
 
     public function show($id)
     {
 
-        $movie = Movie::findorfail($id);
 
-        return response()->json(["data" =>  $movie], 200);
-
+        $movie = Movie::find($id);
     }
 
 
@@ -79,7 +73,6 @@ class MoviesController extends Controller
         );
 
         return response()->json(["message" => $movie], 200);
-
     }
 
 
@@ -91,8 +84,5 @@ class MoviesController extends Controller
         $movie->delete();
 
         return response()->json(["message" => "Removed from the list"], 200);
-
     }
-
-
 }
