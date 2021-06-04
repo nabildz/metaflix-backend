@@ -15,7 +15,8 @@ class MoviesController extends Controller
     public function index()
     {
 
-        $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=d37692672a76f1c72bfdfcdd29a32768')
+        $movies = Http::withToken(config('services.tmdb_api.token'))
+        ->get('https://api.themoviedb.org/3/movie/popular')
             ->json()['results'];
 
         return response()->json(["data" => $movies], 200);
