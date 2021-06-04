@@ -31,7 +31,7 @@ class MovieRequest extends FormRequest
 
         if ($this->getMethod() == 'POST') {
             $rules += [
-                'tmbd_id' => 'required|unique:movies',
+                'tmbd_id' => 'required',
                 'tmbd_vote_average' => 'required',
                 'language' => 'required',
                 'title' => 'required',

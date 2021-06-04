@@ -45,21 +45,32 @@ class MoviesController extends Controller
     public function store(MovieRequest $request)
     {
 
-        $movie = Movie::create(
-            $request->only('tmbd_id', 'tmbd_vote_average', 'language', 'title', 'image_url', 'release_date','status')
-        );
 
-        $message = $movie->status === 'is_watched' ? 'watched list' : 'wish list';
-
-        return response()->json(["message" => "Added to ${message}"], 201);
-    }
+        $movie = Movie::where('tmbd_id', $request->tmbd_id)->first();
 
 
-    public function show($id)
-    {
+        if ($movie && $movie->status != $request->status) {
 
 
-        $movie = Movie::find($id);
+            $movie->update(
+                $request->only('status')
+            );
+
+            $message = $movie->status === 'is_watched' ? 'watched list' : 'wish list';
+
+
+            return response()->json(["message" => "Movied to ${message}"], 200);
+        } elseif (!$movie) {
+
+
+            $movie = Movie::create(
+                $request->only('tmbd_id', 'tmbd_vote_average', 'language', 'title', 'image_url', 'release_date', 'status')
+            );
+
+            $message = $movie->status === 'is_watched' ? 'watched list' : 'wish list';
+
+            return response()->json(["message" => "Added to ${message}"], 201);
+        }
     }
 
 
@@ -72,7 +83,10 @@ class MoviesController extends Controller
             $request->only('rating', 'review')
         );
 
-        return response()->json(["message" => $movie], 200);
+        $rating = $movie->rating === 'yay' ? '👍' : '👎';
+
+
+        return response()->json(["message" => "Rated ${rating}"], 200);
     }
 
 
